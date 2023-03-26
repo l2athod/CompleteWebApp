@@ -1,0 +1,39 @@
+﻿@model MyApp.Models.ViewModels.CategoryViewModel
+
+@* Here Model => (CategoryViewModel Class Object)
+   So, if we want to use any prop of this ViewModel we can access it by Model.propName
+*@
+<form asp-action="CreateUpdate" method="post">
+    <div class="p-3 mt-4">
+
+        @*<div asp-validation-summary="All"></div>*@
+        <input type="hidden" asp-for="Category.CategoryId">
+        <div class="row mt-4">
+            <label asp-for="Category.CategoryName"></label>
+            <input placeholder="Enter CategoryName" asp-for="Category.CategoryName" class="form-control mt-2" />
+            <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
+        </div>
+
+        <div class="row mt-4">
+            <label asp-for="Category.DisplayOrder"></label>
+            <input placeholder="Enter DisplayOrder" asp-for="Category.DisplayOrder" class="form-control mt-2" />
+            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-4" value="@((Model.Category==null || Model.Category.CategoryId==0)?"Create":"Save")">
+    </div>
+    <a asp-controller="Category" asp-action="Index" style="text-decoration: none">Back to list</a>
+</form>
+
+<!--  clinet side validation  -->
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+
+@* Special Comment: Each Model property should either used as asp-route-id="@item.prop" in button type submit
+    or must specify unchanged property by using <input type="hidden" asp-for"unchanged prop_name"/>
+    otherwise that property will not bind at run time in HttpPost request.
+*@

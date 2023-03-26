@@ -1,0 +1,30 @@
+﻿@model MyApp.Models.ViewModels.CategoryViewModel
+
+<form asp-action="Delete" method="post">
+    <div class="p-3 mt-4">
+
+        <div asp-validation-summary="All"></div>
+        <input type="hidden" asp-for="Category.CategoryId">
+        <div class="row mt-4">
+            <label asp-for="Category.CategoryName"></label>
+            <input disable placeholder="Enter CategoryName" asp-for="Category.CategoryName" class="form-control mt-2" />
+            <span asp-validation-for="Category.CategoryName" class="text-danger mt-1"></span>
+        </div>
+
+        <div class="row mt-4">
+            <lable asp-for="DisplayOrder"></lable>
+            <input disable placeholder="Enter DisplayOrder" asp-for="Category.DisplayOrder" class="form-control mt-2" />
+            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-4" value="Delete">
+    </div>
+    <a asp-controller="Category" asp-action="Index" style="text-decoration: none">Back to list</a>
+</form>
+
+<!--  clinet side validation  -->
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

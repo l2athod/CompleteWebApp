@@ -1,0 +1,105 @@
+﻿@model MyApp.Models.ViewModels.ProductViewModel
+
+<form asp-action="CreateUpdate" method="post" enctype="multipart/form-data">
+    <div class="p-3 mt-4">
+
+
+        @*<div asp-validation-summary="All"></div>*@
+        <input type="hidden" asp-for="Product.ProductId">
+        <input type="hidden" asp-for="Product.ImageUrl" />
+        <div class="row mt-4">
+            <label asp-for="Product.ProductName"></label>
+            <input placeholder="Enter CategoryName" asp-for="Product.ProductName" class="form-control mt-2" />
+            <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+        </div>
+
+        <div class="row mt-4">
+            <label asp-for="Product.Description"></label>
+            <textarea placeholder="Enter Description" asp-for="Product.Description" class="form-control mt-2"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+
+        <div class="row mt-4">
+            <label asp-for="Product.Price"></label>
+            <input placeholder="Enter Price" asp-for="Product.Price" class="form-control mt-2" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+
+        <div class="row mt-4">
+            <label asp-for="Product.ImageUrl"></label>
+            <input type="file" name="file" id="ImageFile" class="form-select" />
+        </div>
+
+        <div class="row mt-4">
+            <label asp-for="Product.CategoryId"></label>
+            <select asp-for="Product.CategoryId" asp-items="@Model.Categories" class="form-control mt-2">
+                <option selected disabled>-Select Category--</option>
+            </select>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+
+
+
+        @* Typecasting in cshtml file using as keyword. ex. @Model.categories as IEnumerable<Category> *@
+
+        @*
+        <div class="row mt-4">
+        <label asp-for="product.ImageUrl"></label>
+        <input placeholder="Enter DisplayOrder" asp-for="product.Description" class="form-control mt-2" />
+        <span asp-validation-for="product.Description" class="text-danger"></span>
+        </div>*@
+
+
+        @if (Model.Product == null || Model.Product.ProductId == 0)
+        {
+            <button type="submit" class="btn btn-primary mt-4" onclick="return ValidateImageFile()">Add</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" type="submit">Update</button>
+        }
+
+    </div>
+    <a asp-controller="Product" asp-action="Index" style="text-decoration: none">Back to list</a>
+</form>
+
+<!--  clinet side validation  -->
+@section scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ]
+        });
+
+        function ValidateImageFile() {
+            if (document.getElementById("ImageFile").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please upload image'
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+
+
+@* Special Comment: Each Model property should either used as asp-route-id="@item.prop" in button type submit
+    or must specify unchanged property by using <input type="hidden" asp-for"unchanged prop_name"/>
+    otherwise that property will not bind at run time in HttpPost request.
+*@
+
+
