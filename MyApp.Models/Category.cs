@@ -7,7 +7,6 @@ namespace MyApp.Models
     public class Category
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         [Required]
         public String CategoryName { get; set; }

@@ -36,9 +36,14 @@ namespace MyApp.DataAccessLayer.DataLayer.Repository
             _dbSet.RemoveRange(entity);
         }
 
-        public List<T> GetAll(string? IncludeItems = null)
+        public List<T> GetAll(Expression<Func<T, bool>>? expression = null, string? IncludeItems = null)
         {
             IQueryable<T> query = _dbSet;
+            if(expression is not null)
+            {
+                query = query.Where(expression);
+            }
+
             if (IncludeItems is not null)
             {
                 foreach (var item in IncludeItems.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))

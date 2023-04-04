@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApp</title>
+    <title> WebApplication</title>
     <link rel="stylesheet" href="~/css/externalcss.css" />
+    <link rel="stylesheet" href="~/css/cart.css" />
+    <link rel="stylesheet" href="~/css/summary.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
@@ -31,7 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"> <i class="bi bi-cart-dash"></i> </a>
+                        </li>
+
+                        @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -40,9 +47,9 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>
                             </div>
-                        </li>
+                        </li> *@
                     </ul>
-                    @*<partial name="_LoginPartial" />*@
+                    <partial name="_LoginPartial" /> 
                     <form class="d-flex">
                         <input class="form-control me-sm-2" type="search" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

@@ -1,0 +1,89 @@
+﻿@model MyApp.Models.ViewModels.CartViewModel
+
+<section>
+    <div class="container mh-100" >
+        <div class="row d-flex h-100">
+            <div class="col mt-lg-5 align-items-center">
+                <p><span class="h2">Shopping Cart </span><span class="h4">(1 item in your cart)</span></p>
+
+                <div class="card mb-4 " style="border: 2px solid darkseagreen;">
+                    <div class="card-body p-4">
+
+                        
+                    @foreach(var item in Model.ListOfCart)
+                    {
+                        <div class="row">
+                                
+                            <div class="col-md-2 d-flex justify-content-center text-center">
+                                    <div>
+                                        <p class="small text-muted pb-2 fw-bold fs-5">Product</p>
+                                        <img src="@item.Product.ImageUrl"
+                                             class="img-fluid" style="width: 125px; border-radius: 6px;margin-bottom: 20px; border: 1px solid black" alt="Generic placeholder image">
+                                    </div>
+                            </div>
+                            
+                            <div class="col-md-4 d-flex pt-2 text-center justify-content-center">
+                                <div>
+                                        <p class="small text-muted mb-4 pb-2 fw-bold fs-5">Name</p>
+                                    <p class="lead fw-normal mb-0"> @item.Product.ProductName</p>
+                                </div>
+                            </div>
+
+                                <div class="col-md-3 d-flex pt-2 text-center fs-5">
+                                    <div class="number-input safari_only">
+                                        <p class="small text-muted mb-4 pb-2 fw-bold">Quantity</p>
+
+
+                                        <form method="post">
+                                            <button type="submit" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="minus" asp-controller="Cart" asp-action="minus" asp-route-id="@item.CartId"></button>
+                                            <input class="quantity fw-bold text-black" value="@item.Count"
+                                                   type="number">
+                                            <button type="submit" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="plus" asp-controller="Cart" asp-action="plus" asp-route-id="@item.CartId"></button>
+                                        </form>
+                                    </div>
+
+                            </div>
+
+
+                                <div class="col-md-3 d-flex pt-2 text-center fs-5">
+                                <div>
+                                        <p class="small text-muted mb-4 pb-2 fw-bold">Price</p>
+                                    <p class="lead fw-normal mb-0">@item.Product.Price.ToString("c")</p>
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-2 d-flex justify-content-center">
+                                <div>
+                                    <p class="small text-muted mb-4 pb-2">Total</p>
+                                    <p class="lead fw-normal mb-0">$799</p>
+                                </div>
+                            </div>*@
+                        </div>
+                    }
+
+                    </div>
+                </div>
+
+                <div class="card mb-5">
+                    <div class="p-4">
+
+                        <div class="float-end">
+                            <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2">Order total: </span> <span class="lead fw-normal">@Model.OrderHeader.OrderTotal.ToString("c")</span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    @*<button type="button" class="btn btn-light btn-lg me-2">Continue shopping</button>*@
+                    <a asp-action="Summary" class="btn btn-primary btn-lg ms-3">Proceed To Pay</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

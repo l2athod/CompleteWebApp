@@ -10,6 +10,10 @@ namespace MyApp.DataAccessLayer.DataLayer.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        ICartRepositoty Cart { get; }
+        IApplicationUser ApplicationUser { get; }
+        IOrderDetailRepository OrderDetail { get; }
+        IOrderHeaderRepository OrderHeader { get; }
         void Save();
     }
 }

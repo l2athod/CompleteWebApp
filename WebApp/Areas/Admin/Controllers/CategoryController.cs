@@ -12,7 +12,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             database = _unitOfWork;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             CategoryViewModel categoryViewModel = new CategoryViewModel();

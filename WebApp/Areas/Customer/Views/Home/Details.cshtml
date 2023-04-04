@@ -1,0 +1,27 @@
+﻿@model MyApp.Models.Cart
+
+<div class="row">
+    <div class="col-4">
+        <img src="@Model.Product.ImageUrl" width="400" height="400" /> 
+    </div>
+    <div class="col-8">
+        <p>Product Name: @Model.Product.ProductName</p>
+        <p> Product Description: @Model.Product.Description </p>
+        <p> Product Price: @Model.Product.Price.ToString("0.00 ")</p>
+        <p> Product Category : @Model.Product.Category.CategoryName</p>
+
+        <form method="post">
+                <div class="row pb-3">
+                    <label asp-for="Count"></label>
+                    <input asp-for="Count" class="form-control mt-2" />
+                    <span asp-validation-for="Count" class="text-danger"></span>
+                </div>
+
+                <input type="hidden" asp-for="ProductId" />
+                <button type="submit" class="btn btn-success" asp-controller="Home" asp-action="Index"> Back to Home</button>
+                <button type="submit" class="btn btn-dark"> Add to Cart</button>
+        </form>
+
+
+    </div>
+</div>
