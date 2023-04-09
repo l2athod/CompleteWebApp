@@ -9,6 +9,7 @@ using System.Security.Claims;
 namespace WebApp.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,6 +29,9 @@ namespace WebApp.Areas.Customer.Controllers
         [HttpGet]
         public IActionResult Details(int? productId)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
             Cart cart = new Cart()
             {
                 Product = database.Product.Get(x => x.ProductId == productId, includeItems: "Category"),
@@ -58,19 +62,9 @@ namespace WebApp.Areas.Customer.Controllers
                     database.Cart.AddQuantity(oldCart, cart.Count);
                 }
                 database.Save();
+                HttpContext.Session.SetInt32("CartCount", database.Cart.GetAll(x => x.ApplicationUserId == claims.Value).ToList().Count());
             }
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return RedirectToAction("Index","Cart");
         }
     }
 }

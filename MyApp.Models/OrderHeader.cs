@@ -17,7 +17,9 @@ namespace MyApp.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [Required]
+        [Display(Name="Order Date")]
         public DateTime DateOfOrder { get; set; }
+        [Display(Name = "Shipping Date")]
         public DateTime DateOfShipping { get; set; }
         public double OrderTotal { get; set; }
         public string? OrderStatus { get; set; }
@@ -26,7 +28,9 @@ namespace MyApp.Models
         public string? Carrier{ get; set;}
         public string? SessionId{ get; set; }
         public string? PaymentIntentId { get; set;}
+        [Display(Name = "Payment Date")]
         public DateTime DateOfPayment { get; set; }
+        [Display(Name = "Due Date")]
         public DateTime DueDate { set; get; }
         [Required]
         public string Phone { set; get; }

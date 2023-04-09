@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MyApp.CommonHelper;
 using MyApp.DataAccessLayer.DataLayer.IRepository;
 using MyApp.Models.ViewModels;
 
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = WebSiteRole.Role_Admin)]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class ProductController : Controller
     {
         private readonly IUnitOfWork database;
@@ -31,25 +36,6 @@ namespace WebApp.Areas.Admin.Controllers
             productViewModel.Products = database.Product.GetAll();
             return View(productViewModel);
         }
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create(Category category)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        database.Category.Add(category);
-        //        database.Save();
-        //        TempData["success"] = "Category added successfully...";
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(category);
-        //}
-
         [HttpGet]
         public IActionResult CreateUpdate(int? id)
         {
@@ -119,36 +105,6 @@ namespace WebApp.Areas.Admin.Controllers
             return View(productViewModel);
         }
 
-
-        #region DeleteProduct
-        //[HttpGet]
-        //public IActionResult Delete(int? id)
-        //{
-        //    ProductViewModel productViewModel = new ProductViewModel();
-        //    if (id is null or 0)
-        //    {
-        //        return NotFound();
-        //    }
-        //    productViewModel.product = database.Product.Get(x => x.CategoryId == id);
-        //    if (productViewModel.product is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(productViewModel);
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(ProductViewModel productViewModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        database.Product.Delete(productViewModel.product);
-        //        database.Save();
-        //        TempData["success"] = "Product deleted successfully...";
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(productViewModel);
-        //}
         #region DeleteAPICall
         [HttpDelete]
         public IActionResult Delete(int? id)
@@ -171,9 +127,5 @@ namespace WebApp.Areas.Admin.Controllers
             }
         }
         #endregion
-        #endregion
-
-
-
     }
 }

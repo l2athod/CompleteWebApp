@@ -18,6 +18,14 @@ namespace MyApp.DataAccessLayer.DataLayer.Repository
             _context = context;
         }
 
+        public void PaymentStatus(int orderHeaderId, string SessionId, string PaymentIntentId)
+        {
+            var orderHeader = _context.OrderHeaders.FirstOrDefault(x => x.OrderHeaderId == orderHeaderId);
+            orderHeader.DateOfPayment = DateTime.Now;
+            orderHeader.PaymentIntentId = PaymentIntentId;
+            orderHeader.SessionId = SessionId;
+        }
+
         public void Update(OrderHeader orderHeader)
         {
             _context.OrderHeaders.Update(orderHeader);

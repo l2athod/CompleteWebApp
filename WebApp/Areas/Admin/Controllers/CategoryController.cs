@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MyApp.CommonHelper;
 using MyApp.DataAccessLayer.DataLayer.IRepository;
 using MyApp.Models.ViewModels;
 
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = WebSiteRole.Role_Admin)]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
     public class CategoryController : Controller
     {
         private IUnitOfWork database;
@@ -19,25 +24,7 @@ namespace WebApp.Areas.Admin.Controllers
             categoryViewModel.Categories = database.Category.GetAll();
             return View(categoryViewModel);
         }
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create(Category category)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        database.Category.Add(category);
-        //        database.Save();
-        //        TempData["success"] = "Category added successfully...";
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(category);
-        //}
-
+        
         [HttpGet]
         public IActionResult CreateUpdate(int? id)
         {
